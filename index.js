@@ -25,7 +25,6 @@ var simpleDialog = module.exports = {
       cmd.push('osascript') && cmd.push('-e');
       var script = 'tell app \"System Events\" to display dialog ';
       script += '\"' + str + '\" with title \"' + title + '\" buttons \"OK\"';
-      script += (type == 'info') ? " with icon 0" : "";
       cmd.push(script);
     }
     else if (OS === "win32")
@@ -116,7 +115,11 @@ var simpleDialog = module.exports = {
     }
     else if( OS === "darwin")
     {
-
+      str = str.replace(/"/g, "'"); // double quotes to single quotes
+      cmd.push('osascript') && cmd.push('-e');
+      var script = 'tell app \"System Events\" to display dialog ';
+      script += '\"' + str + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
+      cmd.push(script);
     }
     else if (OS === "win32")
     {
@@ -146,7 +149,19 @@ var simpleDialog = module.exports = {
     }
     else if( OS === "darwin")
     {
+      str = str.replace(/"/g, "'"); // double quotes to single quotes
+      cmd.push('osascript') && cmd.push('-e');
 
+      var script = 'set theResponse to display dialog "' + str + '"';
+      script += ' default answer "" ';
+      script += ' with icon note with title \"' + title + '\"';
+      script += ' buttons {"Cancel", "Continue"}';
+      script += ' default button "Continue"'
+
+      // var script = 'tell app \"System Events\" to display dialog ';
+      // script += '\"' + str + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
+      console.log("script = " + script + "\n");
+      cmd.push(script);
     }
     else if (OS === "win32")
     {
@@ -176,7 +191,8 @@ var simpleDialog = module.exports = {
     }
     else if( OS === "darwin")
     {
-
+      str = str.replace(/"/g, "'"); // double quotes to single quotes
+      cmd.push('osascript') && cmd.push('datepicker.osa');
     }
     else if (OS === "win32")
     {

@@ -1,3 +1,9 @@
+Function BrowseForFile( dialogText )
+  Dim shell : Set shell = CreateObject("Shell.Application")
+  Dim file : Set file = shell.BrowseForFolder(0, dialogTitle, &H4000)
+  BrowseForFile = file.self.Path
+End Function
+
 Set objArgs = WScript.Arguments
 dialogType = objArgs(0)
 dialogTitle = objArgs(1)
@@ -11,6 +17,10 @@ ElseIf dialogType = "question" Then
 ElseIf dialogType = "entry" Then
   entryText = InputBox( dialogText, dialogTitle )
   Wscript.Stdout.Write entryText
+ElseIf dialogType = "fileselect" Then
+  fileName =  BrowseForFile(dialogTitle)
+  Wscript.Stdout.Write fileName
+
 Else
   WScript.Echo "unknown dialog type"
 End If

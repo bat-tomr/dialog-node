@@ -7,9 +7,12 @@ var cmd = [];
 var retVal = "";
 
 var OK = 1;
-var CANCEL = 0;
+var e = 0;
 
-if(OS != "linux " && OS != "darwin" && OS != "win32")
+var OK_STR = "OK";
+var CANCEL_STR = "CANCEL"
+
+if(OS != "linux" && OS != "darwin" && OS != "win32")
 {
   console.log("unknown OS: ", OS);
   process.exit(9);
@@ -167,6 +170,10 @@ var simpleDialog = module.exports = {
       cmd.push('--timeout') && cmd.push(timeout);
       if (str.length > 30) cmd.push('--width') && cmd.push('300');
       cb = function(code, stdout, stderr){
+        if(code)
+          retVal = CANCEL_STR;
+        else
+          retVal = OK_STR;
         callback(code, retVal, stderr);
       }
     }
@@ -192,10 +199,9 @@ var simpleDialog = module.exports = {
 
       cb = function(code, stdout, stderr){
         if(stdout[0] === 1)
-          retVal = "OK";
+          retVal = OK_STR;
         else
-          retVal = "CANCEL";
-        console.log("retVal = " + retVal);
+          retVal = CANCEL_STR;
         callback(code, retVal, stderr);
       }
     }
@@ -215,6 +221,8 @@ var simpleDialog = module.exports = {
       cmd.push('--timeout') && cmd.push(timeout);
       if (str.length > 30) cmd.push('--width') && cmd.push('300');
       cb = function(code, stdout, stderr){
+        //remove line ending
+        retVal = stdout.slice(0,-1);
         callback(code, retVal, stderr);
       }
     }
@@ -269,6 +277,8 @@ var simpleDialog = module.exports = {
       cmd.push('--timeout') && cmd.push(timeout);
       if (str.length > 30) cmd.push('--width') && cmd.push('300');
       cb = function(code, stdout, stderr){
+        //remove line ending
+        retVal = stdout.slice(0,-1);
         callback(code, retVal, stderr);
       }
     }

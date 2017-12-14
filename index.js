@@ -330,7 +330,6 @@ var simpleDialog = module.exports = {
       cmd.push('osascript') && cmd.push('-e');
 
       var script = 'set theDocument to choose file with prompt "' + str + '"';
-      script += ' with icon note with title \"' + title + '\"';
       cmd.push(script);
 
       cb = function(code, stdout, stderr){

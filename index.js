@@ -185,6 +185,10 @@ var simpleDialog = module.exports = {
       script += '\"' + str + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
       cmd.push(script);
       cb = function(code, stdout, stderr){
+        if(code)
+          retVal = CANCEL_STR;
+        else
+          retVal = OK_STR;        
         callback(code, retVal, stderr);
       }
     }
@@ -242,6 +246,10 @@ var simpleDialog = module.exports = {
       console.log("script = " + script + "\n");
       cmd.push(script);
       cb = function(code, stdout, stderr){
+        //parse return from appl script code
+        var findstr = "text returned:";
+        retVal = stdout.slice(stdout.indexOf("text returned:") + findstr.length, -1);
+
         callback(code, retVal, stderr);
       }
     }
@@ -287,6 +295,8 @@ var simpleDialog = module.exports = {
       str = str.replace(/"/g, "'"); // double quotes to single quotes
       cmd.push('osascript') && cmd.push('datepicker.osa');
       cb = function(code, stdout, stderr){
+        //remove line ending
+        retVal = stdout.slice(0,-1);
         callback(code, retVal, stderr);
       }
     }

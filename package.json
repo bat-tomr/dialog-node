@@ -1,47 +1,47 @@
 {
+  "name": "simple-dialog",
+  "description": "OS independent UI dialogs like alerts and user inputs",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bat-tomr/simple-dialog"
+  }, 
+
   "author": {
     "name": "Thomas Ruge",
     "email": "truge@blueaspentech.com",
     "url": "http://www.blueaspentech.com"
   },
-  "name": "simpleDialog",
-  "description": "Show different dialogs using Node.",
-  "version": "0.1.0",
-  "repository": {
-    "url": "https://github.com/bat=tomr/simpleDialog"
+
+
+  "main": "index.js",
+
+  "keywords": [
+      "dialogs",
+      "UI",
+      "x-platform"
+  ],
+
+  "scripts": {
+    "test": "test-simple.dialog.js"
   },
-  "bin": {
-    "show_dialog": "./bin/simpleDialog.js"
-  },
+
   "dependencies": {},
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
     "node": "*"
   },
-  "_id": "dialog@0.1.0",
-  "dist": {
-    "shasum-change": "01e84f3c3c3e1c71dfbe1e38119a73a60d69395f",
-    "tarball-change": "http://registry.npmjs.org/dialog/-/dialog-0.1.8.tgz"
-  },
-  "_npmVersion": "1.1.69",
-  "_npmUser": {
-    "name": "Thomas Ruge",
-    "email": "truge@blueaspentech.com"
-  },
+
   "maintainers": [
     {
       "name": "Thomas Ruge",
       "email": "truge@blueaspentech.com"
     }
   ],
-  "directories": {},
-  "_shasum-change": "01e84f3c3c3e1c71dfbe1e38119a73a60d69395f",
-  "_resolved-change": "https://registry.npmjs.org/dialog/-/dialog-0.1.8.tgz",
-  "_from": "simpleDialog@*",
   "bugs": {
-    "url": "https://github.com/bat-tomr/simpleDialog/issues"
+    "url": "https://github.com/bat-tomr/simple-dialog/issues",
+    "email": "truge@blueaspentech.com"
   },
-  "readme": "ERROR: No README data found!",
   "homepage": "https://github.com/bat-tomr/simpleDialog"
 }

@@ -3,8 +3,9 @@ var join = require('path').join,
     os = require('os');
 
 var OS = os.platform();
-var cmd = [];
 var retVal = "";
+
+var cmd = [];
 
 var OK = 1;
 var CANCEL = 0;
@@ -32,7 +33,12 @@ if(OS != "linux" && OS != "darwin" && OS != "win32")
 
 var simpleDialog = module.exports = {
 
+  init: function(){
+    cmd = [];
+  },
+
   info: function(str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
       str = str.replace(/[<>]/g, '');
@@ -44,12 +50,14 @@ var simpleDialog = module.exports = {
       if (str.length > 30) cmd.push('--width') && cmd.push('300');
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
 
     }
     else if( OS === "darwin")
     {
+      title = "information: " + title;
       str = str.replace(/"/g, "'"); // double quotes to single quotes
       cmd.push('osascript') && cmd.push('-e');
       var script = 'tell app \"System Events\" to display dialog ';
@@ -57,7 +65,8 @@ var simpleDialog = module.exports = {
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
 
     }
@@ -71,15 +80,16 @@ var simpleDialog = module.exports = {
       cmd.push(str);
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
   warn: function(str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
       str = str.replace(/[<>]/g, '');
@@ -91,14 +101,23 @@ var simpleDialog = module.exports = {
       if (str.length > 30) cmd.push('--width') && cmd.push('300');
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
 
     }
     else if( OS === "darwin")
     {
+      title = "warning: " + title;
+      str = str.replace(/"/g, "'"); // double quotes to single quotes
+      cmd.push('osascript') && cmd.push('-e');
+      var script = 'tell app \"System Events\" to display dialog ';
+      script += '\"' + str + '\" with title \"' + title + '\" buttons \"OK\"';
+      cmd.push(script);
+
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if (OS === "win32")
@@ -112,17 +131,19 @@ var simpleDialog = module.exports = {
       cmd.push(str);
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
   error: function(str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
+      title = "error: " + title;
       str = str.replace(/[<>]/g, '');
       cmd.push('zenity');
       cmd.push('--error');
@@ -132,13 +153,21 @@ var simpleDialog = module.exports = {
       if (str.length > 30) cmd.push('--width') && cmd.push('300');
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if( OS === "darwin")
     {
+      str = str.replace(/"/g, "'"); // double quotes to single quotes
+      cmd.push('osascript') && cmd.push('-e');
+      var script = 'tell app \"System Events\" to display dialog ';
+      script += '\"' + str + '\" with title \"' + title + '\" buttons \"OK\"';
+      cmd.push(script);
+
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if (OS === "win32")
@@ -151,15 +180,16 @@ var simpleDialog = module.exports = {
       cmd.push(str);
 
       cb = function(code, stdout, stderr){
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
   question: function( str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
       str = str.replace(/[<>]/g, '');
@@ -174,7 +204,8 @@ var simpleDialog = module.exports = {
           retVal = CANCEL_STR;
         else
           retVal = OK_STR;
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if( OS === "darwin")
@@ -189,7 +220,8 @@ var simpleDialog = module.exports = {
           retVal = CANCEL_STR;
         else
           retVal = OK_STR;
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if (OS === "win32")
@@ -206,15 +238,16 @@ var simpleDialog = module.exports = {
           retVal = OK_STR;
         else
           retVal = CANCEL_STR;
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
   entry: function( str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
       str = str.replace(/[<>]/g, '');
@@ -227,7 +260,8 @@ var simpleDialog = module.exports = {
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if( OS === "darwin")
@@ -243,14 +277,14 @@ var simpleDialog = module.exports = {
 
       // var script = 'tell app \"System Events\" to display dialog ';
       // script += '\"' + str + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
-      console.log("script = " + script + "\n");
       cmd.push(script);
       cb = function(code, stdout, stderr){
         //parse return from appl script code
         var findstr = "text returned:";
         retVal = stdout.slice(stdout.indexOf("text returned:") + findstr.length, -1);
 
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if (OS === "win32")
@@ -264,15 +298,16 @@ var simpleDialog = module.exports = {
 
       cb = function(code, stdout, stderr){
         retVal = stdout;
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
   calendar: function( str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
       str = str.replace(/[<>]/g, '');
@@ -285,7 +320,8 @@ var simpleDialog = module.exports = {
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if( OS === "darwin")
@@ -295,7 +331,8 @@ var simpleDialog = module.exports = {
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if (OS === "win32")
@@ -304,11 +341,11 @@ var simpleDialog = module.exports = {
       return
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
   fileselect: function( str, title, timeout, callback){
+    this.init();
     if( OS === "linux")
     {
       str = str.replace(/[<>]/g, '');
@@ -321,7 +358,8 @@ var simpleDialog = module.exports = {
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if( OS === "darwin")
@@ -337,7 +375,8 @@ var simpleDialog = module.exports = {
         var findstr = "text returned:";
         retVal = stdout.slice(stdout.indexOf("text returned:") + findstr.length, -1);
 
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
     else if (OS === "win32")
@@ -351,16 +390,19 @@ var simpleDialog = module.exports = {
 
       cb = function(code, stdout, stderr){
         retVal = stdout;
-        callback(code, retVal, stderr);
+        if(callback)
+          callback(code, retVal, stderr);
       }
     }
 
-    this.debugprint(cmd,callback);
     this.run(cmd, cb, callback);
   },
 
-  debugprint: function(cmd,cb){
-    console.log("debug-info: cmd = " + cmd + "cb = " + cb);
+  debugprint: function(cmd,args,cb){
+    console.log("debug-info: cmd = " + cmd );
+    console.log("debug-info: args = " + args );
+    console.log("debug-info: cb = " + cb);
+    console.log('\n');
   },
 
   run: function(cmd, cb, callback){
@@ -371,10 +413,11 @@ var simpleDialog = module.exports = {
     var child = spawn(bin, args);
     var stdoutlines = 0;
 
+    //this.debugprint(cmd,args,callback);
+
     child.stdout.on('data', function(data){
       stdout += data.toString();
       stdoutlines++;
-      console.log("stdoutlines = ", stdoutlines);
     })
 
     child.stderr.on('data', function(data){

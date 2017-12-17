@@ -1,5 +1,5 @@
 
-var dialog = require('../simple-dialog');
+var dialog = require('../dialog-node');
 
 //will be called after user closes the dialog
 var callback = function(code, retVal, stderr)

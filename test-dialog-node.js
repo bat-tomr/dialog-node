@@ -1,4 +1,4 @@
- var simpleDialog = require('../simple-dialog');
+ var dialogNode = require('../dialog-node');
  var os = require('os');
  var events = require('events');
 
@@ -10,33 +10,33 @@
    eventEmitter.emit('nextCall');
  };
 
-// loop through all dialogs and exit. Since simple-dialog is non-modal or non blocking
+// loop through all dialogs and exit. Since dialog-node is non-modal or non blocking
 // We are handling the execution in our own little pseudo event queue
 
 var eventEmitter = new events.EventEmitter();
 var ptr = 0;
 
 var eventQueue = [
-	{ cmd:simpleDialog.info,
+	{ cmd:dialogNode.info,
 		args:["This dialog closes in 3 seconds", "timeout", 3, callback] },
-	{ cmd:simpleDialog.warn,
+	{ cmd:dialogNode.warn,
 		args:["Your bank accounts just got wiped!", "Bank Account", 0, callback] },
-	{ cmd:simpleDialog.error,
+	{ cmd:dialogNode.error,
 		args:["Found only Windows", "Proper OS missing", 0, callback] },
-	{ cmd:simpleDialog.question,
+	{ cmd:dialogNode.question,
 		args:["Do you really want me to launch this rocket ?", "Launch control", 0, callback] },
-	{ cmd:simpleDialog.entry,
+	{ cmd:dialogNode.entry,
 		args:["Dear user, what do you like about me ?", "Opinion", 0, callback] },
-	{ cmd:simpleDialog.calendar,
+	{ cmd:dialogNode.calendar,
 		args:["Date of the birth of the Universe", "The beginning", 0, callback] },
-	{ cmd:simpleDialog.fileselect,
+	{ cmd:dialogNode.fileselect,
 		args:["Which file do you want to send to your boss ?", "Resignation letter", 0, callback] },
 	{ cmd:process.exit,
 		args:[] }
 ];
 
 var evalNextFunction = function(){
-	var evalFun = eventQueue[ptr].cmd.apply(simpleDialog, eventQueue[ptr].args);
+	var evalFun = eventQueue[ptr].cmd.apply(dialogNode, eventQueue[ptr].args);
 	ptr++;
 }
 

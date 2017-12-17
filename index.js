@@ -19,7 +19,7 @@ if(OS != "linux" && OS != "darwin" && OS != "win32")
   process.exit(9);
 }
 
-var simpleDialog = module.exports = {
+var dialogNode = module.exports = {
 
   init: function(){
     cmd = [];

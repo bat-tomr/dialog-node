@@ -1,15 +1,15 @@
-# simple-dialog
+# dialog-node, dialog-node, eazy-dialog, quick-dialog
 
-simple-dialog is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs. The code has been heavily inspired and influenced by Tomás Pollak and his dialog project (https://www.npmjs.com/package/dialog). simple-dialog takes the same concept of providing a wrapper around OS specific dialog tools like zenity, apple script and VBS but extends it to dialogs that request user inputs (like questions, input dialog or file selector). The approach of calling UI tools included int the OS by default has the advantage of avoiding the usage of heavier cross platform UI frameworks like electron.js or Qt and provides the following benefits:
+dialog-node is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs. The code has been heavily inspired and influenced by Tomás Pollak and his dialog project (https://www.npmjs.com/package/dialog). dialog-node takes the same concept of providing a wrapper around OS specific dialog tools like zenity, apple script and VBS but extends it to dialogs that request user inputs (like questions, input dialog or file selector). The approach of calling UI tools included int the OS by default has the advantage of avoiding the usage of heavier cross platform UI frameworks like electron.js or Qt and provides the following benefits:
 
-* no external dependencies since simple-dialog does all the UI dialogs with onboard tools
+* no external dependencies since dialog-node does all the UI dialogs with onboard tools
 * low memory foot print, important for IoT platforms like Raspberry
 * low CPU consumption 
 
 ## Installation
 
 ```
-npm install simple-dialog
+npm install dialog-node
 ```
 
 ## Running the tests
@@ -17,8 +17,8 @@ npm install simple-dialog
 In order to run the test after installation:
 
 ```
-cd simple-dialog
-nodejs test-simple-dialog
+cd dialog-node
+nodejs test-dialog-node
 ```
 
 This test will run through all available dialogs with some example settings
@@ -26,7 +26,7 @@ This test will run through all available dialogs with some example settings
 ### Example 
 
 ```
-var dialog = require('../simple-dialog');
+var dialog = require('dialog-node');
 
 //will be called after user closes the dialog
 var callback = function(code, retVal, stderr)
@@ -40,7 +40,7 @@ dialog.entry('Type some text', "entry prompt", 0, callback);
 
 ### Parameter for all dialogs
 ```
-simple-dialog.<dialog>(msg, title, timeout, callback);
+dialog-node.<dialog>(msg, title, timeout, callback);
 
 msg      = string containing specific dialog message
 title    = string containing title of dialog (this parameter is not observed for all dialogs)
@@ -52,7 +52,7 @@ callback = to be called after user closes dialog, for further description see fu
 
 Information dialog with text and title and an OK button
 ```
-simple-dialog.info(msg, title, timeout, callback);
+dialog-node.info(msg, title, timeout, callback);
 ```
 
 ### warn
@@ -60,14 +60,14 @@ simple-dialog.info(msg, title, timeout, callback);
 Warning dialog with text and title and an OK button
 
 ```
-simple-dialog.warn(msg, title, timeout, callback);
+dialog-node.warn(msg, title, timeout, callback);
 ```
 
 ### error
 
 Error dialog with text and title and an OK button
 ```
-simple-dialog.error(msg, title, timeout, callback);
+dialog-node.error(msg, title, timeout, callback);
 ```
 
 ### question
@@ -75,7 +75,7 @@ simple-dialog.error(msg, title, timeout, callback);
 A dialog that displays text and title and that prompts user to click a Cancel or an OK button. OK is the default answer. 
 
 ```
-simple-dialog.question(msg, title, timeout, callback);
+dialog-node.question(msg, title, timeout, callback);
 ```
 
 Returns the result of the user action as a string handed into the callback function (see also callback mechanism):
@@ -88,7 +88,7 @@ Returns the result of the user action as a string handed into the callback funct
 Dialog querying user to type in some text.
 
 ```
-simple-dialog.entry(msg, title, timeout, callback);
+dialog-node.entry(msg, title, timeout, callback);
 ```
 
 Returns the text the user typed as a string handed into the callback function (see also callback mechanism):
@@ -100,7 +100,7 @@ Returns the text the user typed as a string handed into the callback function (s
 Prompts user to select or type a date. This one varies quite a bit across the different OSes.
 
 ```
-simple-dialog.calendar(msg, title, timeout, callback);
+dialog-node.calendar(msg, title, timeout, callback);
 ```
 
 Returns the date the user selected as a string handed into the callback function (see also callback mechanism):
@@ -113,7 +113,7 @@ Returns the date the user selected as a string handed into the callback function
 Prompts user to select a file. 
 
 ```
-simple-dialog.fileselect(msg, title, timeout, callback);
+dialog-node.fileselect(msg, title, timeout, callback);
 ```
 
 Returns the path of a selected file as a string handed into the callback function (see also callback mechanism):
@@ -122,7 +122,7 @@ Returns the path of a selected file as a string handed into the callback functio
 
 ## Callback mechanism
 
-simple-dialogs are non-blocking and call a callback function after the user action happened (i.e. clicking 'OK' button). For dialogs that return some information (i.e. the entry text that the user typed), callback hands in retVal which contains the user's response as a string.
+dialog-nodes are non-blocking and call a callback function after the user action happened (i.e. clicking 'OK' button). For dialogs that return some information (i.e. the entry text that the user typed), callback hands in retVal which contains the user's response as a string.
 
 ### Definition of callback
 ```

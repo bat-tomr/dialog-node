@@ -30,7 +30,7 @@ var eventQueue = [
 	{ cmd:simpleDialog.calendar, 
 		args:["Date of the birth of the Universe", "The beginning", 0, callback] },
 	{ cmd:simpleDialog.fileselect, 
-		args:["Which file do you want to send to your boss ?", "Reignation letter", 0, callback] },
+		args:["Which file do you want to send to your boss ?", "Resignation letter", 0, callback] },
 	{ cmd:process.exit,
 		args:[] }
 ];

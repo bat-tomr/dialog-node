@@ -19,18 +19,6 @@ if(OS != "linux" && OS != "darwin" && OS != "win32")
   process.exit(9);
 }
 
-// internal callbacks convert platform specific return values
-// into platform independent values and hand them into the user callbacks
-// return values from the different dialogs
-// info,warn,error:
-// question:
-//  returns OK, Cancel as integer (OK = 1, Cancel = 0)
-// entry:
-//  returns text as string
-// calendar
-//  returns date as string
-
-
 var simpleDialog = module.exports = {
 
   init: function(){
@@ -62,6 +50,7 @@ var simpleDialog = module.exports = {
       cmd.push('osascript') && cmd.push('-e');
       var script = 'tell app \"System Events\" to display dialog ';
       script += '\"' + str + '\" with title \"' + title + '\" buttons \"OK\"';
+      script += ' giving up after ' + timeout;
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
@@ -113,6 +102,7 @@ var simpleDialog = module.exports = {
       cmd.push('osascript') && cmd.push('-e');
       var script = 'tell app \"System Events\" to display dialog ';
       script += '\"' + str + '\" with title \"' + title + '\" buttons \"OK\"';
+      script += ' giving up after ' + timeout;
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
@@ -163,6 +153,7 @@ var simpleDialog = module.exports = {
       cmd.push('osascript') && cmd.push('-e');
       var script = 'tell app \"System Events\" to display dialog ';
       script += '\"' + str + '\" with title \"' + title + '\" buttons \"OK\"';
+      script += ' giving up after ' + timeout;
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
@@ -214,6 +205,7 @@ var simpleDialog = module.exports = {
       cmd.push('osascript') && cmd.push('-e');
       var script = 'tell app \"System Events\" to display dialog ';
       script += '\"' + str + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
+      script += ' giving up after ' + timeout;
       cmd.push(script);
       cb = function(code, stdout, stderr){
         if(code)
@@ -274,6 +266,7 @@ var simpleDialog = module.exports = {
       script += ' with icon note with title \"' + title + '\"';
       script += ' buttons {"Cancel", "Continue"}';
       script += ' default button "Continue"'
+      script += ' giving up after ' + timeout;
 
       // var script = 'tell app \"System Events\" to display dialog ';
       // script += '\"' + str + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';

@@ -17,19 +17,19 @@ var eventEmitter = new events.EventEmitter();
 var ptr = 0;
 
 var eventQueue = [
-	{ cmd:simpleDialog.info, 
-		args:["This dialog closes in 3 sseconds", "timeout", 3, callback] },
-	{ cmd:simpleDialog.warn, 
+	{ cmd:simpleDialog.info,
+		args:["This dialog closes in 3 seconds", "timeout", 3, callback] },
+	{ cmd:simpleDialog.warn,
 		args:["Your bank accounts just got wiped!", "Bank Account", 0, callback] },
-	{ cmd:simpleDialog.error, 
+	{ cmd:simpleDialog.error,
 		args:["Found only Windows", "Proper OS missing", 0, callback] },
-	{ cmd:simpleDialog.question, 
+	{ cmd:simpleDialog.question,
 		args:["Do you really want me to launch this rocket ?", "Launch control", 0, callback] },
-	{ cmd:simpleDialog.entry, 
+	{ cmd:simpleDialog.entry,
 		args:["Dear user, what do you like about me ?", "Opinion", 0, callback] },
-	{ cmd:simpleDialog.calendar, 
+	{ cmd:simpleDialog.calendar,
 		args:["Date of the birth of the Universe", "The beginning", 0, callback] },
-	{ cmd:simpleDialog.fileselect, 
+	{ cmd:simpleDialog.fileselect,
 		args:["Which file do you want to send to your boss ?", "Resignation letter", 0, callback] },
 	{ cmd:process.exit,
 		args:[] }

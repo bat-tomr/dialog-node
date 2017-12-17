@@ -1,4 +1,4 @@
-# dialog-node, dialog-node, eazy-dialog, quick-dialog
+# dialog-node
 
 dialog-node is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs. The code has been heavily inspired and influenced by Tomás Pollak and his dialog project (https://www.npmjs.com/package/dialog). dialog-node takes the same concept of providing a wrapper around OS specific dialog tools like zenity, apple script and VBS but extends it to dialogs that request user inputs (like questions, input dialog or file selector). The approach of calling UI tools included int the OS by default has the advantage of avoiding the usage of heavier cross platform UI frameworks like electron.js or Qt and provides the following benefits:
 

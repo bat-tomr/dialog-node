@@ -31,6 +31,8 @@ var eventQueue = [
 		args:["Date of the birth of the Universe", "The beginning", 0, callback] },
 	{ cmd:dialogNode.fileselect,
 		args:["Which file do you want to send to your boss ?", "Resignation letter", 0, callback] },
+	{ cmd:dialogNode.info,
+		args:["The end...", "Last Dialog", 3, callback] },
 	{ cmd:process.exit,
 		args:[] }
 ];

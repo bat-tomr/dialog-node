@@ -403,7 +403,12 @@ var dialogNode = module.exports = {
         args = cmd.splice(1),
         stdout = '', stderr = '';
 
-    var child = spawn(bin, args);
+    try {
+      var child = spawn(bin, args, {cwd:__dirname});
+    } catch (err) {
+        console.log('spawn failed : ' + err.message);
+    }
+
     var stdoutlines = 0;
 
     //this.debugprint(cmd,args,callback);

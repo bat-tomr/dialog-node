@@ -1,38 +1,31 @@
 {
   "name": "dialog-node",
   "description": "dialog-node is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/bat-tomr/dialog-node"
-  }, 
-
+  },
   "author": {
     "name": "Thomas Ruge",
     "email": "truge@blueaspentech.com",
     "url": "http://www.blueaspentech.com"
   },
-
-
   "main": "index.js",
-
   "keywords": [
-      "dialogs",
-      "UI",
-      "x-platform"
+    "dialogs",
+    "UI",
+    "x-platform"
   ],
-
   "scripts": {
     "test": "test-dialog-node.js"
   },
-
   "dependencies": {},
   "devDependencies": {},
   "optionalDependencies": {},
   "engines": {
     "node": "*"
   },
-
   "maintainers": [
     {
       "name": "Thomas Ruge",

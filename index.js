@@ -360,13 +360,12 @@ var dialogNode = module.exports = {
       str = str.replace(/"/g, "'"); // double quotes to single quotes
       cmd.push('osascript') && cmd.push('-e');
 
-      var script = 'set theDocument to choose file with prompt "' + str + '"';
+      var script = 'set theDocument to (the POSIX path of (choose file with prompt "' + str + '"))';
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
         //parse return from appl script code
-        var findstr = "text returned:";
-        retVal = stdout.slice(stdout.indexOf("text returned:") + findstr.length, -1);
+        retVal = stdout.slice(0,-1);
 
         if(callback)
           callback(code, retVal, stderr);

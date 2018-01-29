@@ -17,13 +17,19 @@ npm install dialog-node
 In order to run the test after installation:
 
 ```
+npm test
+```
+
+or
+
+```
 cd dialog-node
 nodejs test-dialog-node
 ```
 
 This test will run through all available dialogs with some example settings
 
-### Example 
+### Example (see also example.js)
 
 ```
 var dialog = require('dialog-node');
@@ -35,6 +41,12 @@ var callback = function(code, retVal, stderr)
 }
 
 dialog.entry('Type some text', "entry prompt", 0, callback);
+```
+
+in order to run example.js:
+
+```
+npm start
 ```
 ## Usage
 
@@ -132,6 +144,18 @@ code = return code from dialog
 retVal = user's response as a string
 stderr = any error information that the dialog created
 ```
+
+## Packaging with pkg
+
+dialog-node can be used with the packaging tool pkg (https://github.com/zeit/pkg). 
+
+The following command will package dialog-node and create dialog-node binaries for different platforms.
+```
+cd dialog-node
+pkg .
+```
+
+In order to package dialog-node with your app, just make sure that your package.json includes the apropriate assets (see dialog-node's package.json).
 
 ## Comments
 

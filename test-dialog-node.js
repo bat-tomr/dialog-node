@@ -1,4 +1,4 @@
- var dialogNode = require('../dialog-node');
+ var dialogNode = require('dialog-node');
  var os = require('os');
  var events = require('events');
 
@@ -42,6 +42,10 @@ var evalNextFunction = function(){
 	ptr++;
 }
 
+console.log("starting test-dialog-node ...");
+
 eventEmitter.on('nextCall', evalNextFunction);
 
 evalNextFunction();
+
+console.log("... test-dialog-node finished");

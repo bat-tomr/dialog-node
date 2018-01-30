@@ -1,4 +1,4 @@
- var dialogNode = require('dialog-node');
+ var dialogNode = require('../dialog-node');
  var os = require('os');
  var events = require('events');
 

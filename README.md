@@ -145,18 +145,6 @@ retVal = user's response as a string
 stderr = any error information that the dialog created
 ```
 
-## Packaging with pkg
-
-dialog-node can be used with the packaging tool pkg (https://github.com/zeit/pkg). 
-
-The following command will package dialog-node and create dialog-node binaries for different platforms.
-```
-cd dialog-node
-pkg .
-```
-
-In order to package dialog-node with your app, just make sure that your package.json includes the apropriate assets (see dialog-node's package.json).
-
 ## Comments
 
 ## Known Bugs / Issues

@@ -63,7 +63,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push('msgbox.vbs');
+      cmd.push(__dirname + '\\msgbox.vbs');
       cmd.push('notification');
       cmd.push('information: ' + title);
       cmd.push(str);
@@ -115,7 +115,7 @@ var dialogNode = module.exports = {
 
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push('msgbox.vbs');
+      cmd.push(__dirname + '\\msgbox.vbs');
       cmd.push('notification');
       cmd.push('warning' + title);
       cmd.push(str);
@@ -165,7 +165,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push('msgbox.vbs');
+      cmd.push(__dirname + '\\msgbox.vbs');
       cmd.push('notification');
       cmd.push('error: ' + title);
       cmd.push(str);
@@ -220,7 +220,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push('msgbox.vbs')
+      cmd.push(__dirname + '\\msgbox.vbs');
       cmd.push('question');
       cmd.push(title);
       cmd.push(str);
@@ -284,7 +284,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push('msgbox.vbs')
+      cmd.push(__dirname + '\\msgbox.vbs');
       cmd.push('entry');
       cmd.push(title);
       cmd.push(str);
@@ -320,7 +320,7 @@ var dialogNode = module.exports = {
     else if( OS === "darwin")
     {
       str = str.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('datepicker.osa');
+      cmd.push('osascript') && cmd.push(__dirname + '/datepicker.osa');
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
@@ -375,7 +375,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push('msgbox.vbs')
+      cmd.push(__dirname + '\\msgbox.vbs');
       cmd.push('fileselect');
       cmd.push(title);
       cmd.push(str);

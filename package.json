@@ -1,7 +1,7 @@
 {
   "name": "dialog-node",
   "description": "dialog-node is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs.",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "bin": "example.js",
   "repository": {
     "type": "git",
@@ -40,6 +40,9 @@
   },
   "homepage": "https://github.com/bat-tomr/dialog-node",
   "pkg": {
-    "assets": ["datepicker.osa", "msgbox.vbs"]
+    "assets": [
+      "datepicker.osa",
+      "msgbox.vbs"
+    ]
   }
 }

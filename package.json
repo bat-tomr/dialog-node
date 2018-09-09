@@ -1,7 +1,7 @@
 {
   "name": "dialog-node",
   "description": "dialog-node is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs.",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "bin": "example.js",
   "repository": {
     "type": "git",

@@ -13,6 +13,8 @@ var CANCEL = 0;
 var OK_STR = "OK";
 var CANCEL_STR = "CANCEL"
 
+var cwd = __dirname; //preset cwd
+
 if(OS != "linux" && OS != "darwin" && OS != "win32")
 {
   console.log("unknown OS: ", OS);
@@ -20,6 +22,15 @@ if(OS != "linux" && OS != "darwin" && OS != "win32")
 }
 
 var dialogNode = module.exports = {
+
+  // some packaging tools don't set __dirname properly (webpack or jxcore)
+  // this function allows the calling module to set dialog-node's working directory properly
+  // which is necessary for dialog-node to find its assets
+  // needs to be called before any other function
+  // you can safely ignore this function if using no packaging tool(npm is fine)
+  setCwd: function(dirname){
+    cwd = dirname;
+  },
 
   init: function(){
     cmd = [];
@@ -63,7 +74,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push(__dirname + '\\msgbox.vbs');
+      cmd.push('msgbox.vbs');
       cmd.push('notification');
       cmd.push('information: ' + title);
       cmd.push(str);
@@ -115,7 +126,7 @@ var dialogNode = module.exports = {
 
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push(__dirname + '\\msgbox.vbs');
+      cmd.push('msgbox.vbs');
       cmd.push('notification');
       cmd.push('warning' + title);
       cmd.push(str);
@@ -165,7 +176,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push(__dirname + '\\msgbox.vbs');
+      cmd.push('msgbox.vbs');
       cmd.push('notification');
       cmd.push('error: ' + title);
       cmd.push(str);
@@ -220,7 +231,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push(__dirname + '\\msgbox.vbs');
+      cmd.push('msgbox.vbs')
       cmd.push('question');
       cmd.push(title);
       cmd.push(str);
@@ -284,7 +295,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push(__dirname + '\\msgbox.vbs');
+      cmd.push('msgbox.vbs')
       cmd.push('entry');
       cmd.push(title);
       cmd.push(str);
@@ -320,7 +331,7 @@ var dialogNode = module.exports = {
     else if( OS === "darwin")
     {
       str = str.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push(__dirname + '/datepicker.osa');
+      cmd.push('osascript') && cmd.push('datepicker.osa');
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
@@ -360,12 +371,13 @@ var dialogNode = module.exports = {
       str = str.replace(/"/g, "'"); // double quotes to single quotes
       cmd.push('osascript') && cmd.push('-e');
 
-      var script = 'set theDocument to (the POSIX path of (choose file with prompt "' + str + '"))';
+      var script = 'set theDocument to choose file with prompt "' + str + '"';
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
         //parse return from appl script code
-        retVal = stdout.slice(0,-1);
+        var findstr = "text returned:";
+        retVal = stdout.slice(stdout.indexOf("text returned:") + findstr.length, -1);
 
         if(callback)
           callback(code, retVal, stderr);
@@ -375,7 +387,7 @@ var dialogNode = module.exports = {
     {
       cmd.push('cscript');
       cmd.push('//Nologo');
-      cmd.push(__dirname + '\\msgbox.vbs');
+      cmd.push('msgbox.vbs')
       cmd.push('fileselect');
       cmd.push(title);
       cmd.push(str);
@@ -394,6 +406,7 @@ var dialogNode = module.exports = {
     console.log("debug-info: cmd = " + cmd );
     console.log("debug-info: args = " + args );
     console.log("debug-info: cb = " + cb);
+    console.log("cwd = " + cwd);
     console.log('\n');
   },
 
@@ -403,7 +416,7 @@ var dialogNode = module.exports = {
         stdout = '', stderr = '';
 
     try {
-      var child = spawn(bin, args);
+      var child = spawn(bin, args, {cwd:cwd});
     } catch (err) {
         console.log('spawn failed : ' + err.message);
     }
@@ -420,6 +433,10 @@ var dialogNode = module.exports = {
     child.stderr.on('data', function(data){
       stderr += data.toString();
     })
+
+    child.on('error', function(error){
+      console.log("dialog-node, error = ", error);
+    });
 
     child.on('exit', function(code){
       cb && cb(code, stdout, stderr, callback);

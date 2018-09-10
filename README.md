@@ -50,6 +50,18 @@ npm start
 ```
 ## Usage
 
+### setCwd(directory) (optional)
+Some packaging tools don't set `__dirname` properly (webpack or jxcore)
+`setCwd` allows the calling module to set dialog-node's working directory properly
+in order to find its assets
+Needs to be called before any other function
+You can safely ignore this function if using no packaging tool(npm is fine)
+
+```
+setCwd(directory);
+directory = location of mode_modules folder that includes dialog-node
+```
+
 ### Parameter for all dialogs
 ```
 dialog-node.<dialog>(msg, title, timeout, callback);

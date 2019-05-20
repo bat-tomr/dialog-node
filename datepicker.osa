@@ -1,85 +1,71 @@
 # 06/04/16 09:35:02
 # Author: Shane Stanley
 # Adapted by Christopher Stone
-
-#use AppleScript version "2.3.1"
-use AppleScript version "2.4"
-use scripting additions
-use framework "Foundation"
+# Fixed & Rewritten by CJK
+# Permission obtained for MIT license per https://stackoverflow.com/questions/56216434/problem-with-date-picker-showing-main-thread-issue/56217976?noredirect=1#comment99061871_56217976
+--------------------------------------------------------------------------------
 use framework "AppKit"
+use scripting additions
 
-my datePicker()
+property this : a reference to the current application
+property nil : a reference to missing value
+property _1 : a reference to reference
 
-on datePicker()
-	set theApp to path to frontmost application as text
+property NSAlert : a reference to NSAlert of this
+property NSDatePicker : a reference to NSDatePicker of this
+property NSView : a reference to NSView of this
 
-	if not (current application's NSThread's isMainThread()) as boolean then
-		display alert "This script must be run from the main thread." buttons {"Cancel"} as critical
-		error number -128
-	end if
-	-- create a view
-	set theView to current application's NSView's alloc()'s initWithFrame:(current application's NSMakeRect(0, 0, 100, 175))
-	-- create date picker
-	set datePicker to current application's NSDatePicker's alloc()'s initWithFrame:(current application's NSMakeRect(0, 0, 100, 100))
-	-- set style: choices are NSTextFieldAndStepperDatePickerStyle, NSClockAndCalendarDatePickerStyle, or NSTextFieldDatePickerStyle
-	#datePicker's setDatePickerStyle:(current application's NSClockAndCalendarDatePickerStyle)
-	datePicker's setDatePickerStyle:(current application's NSTextFieldAndStepperDatePickerStyle)
-	#datePicker's setDatePickerStyle:(current application's NSTextFieldDatePickerStyle)
-	-- set elements: choices include NSHourMinuteDatePickerElementFlag, NSHourMinuteSecondDatePickerElementFlag, NSTimeZoneDatePickerElementFlag, NSYearMonthDatePickerElementFlag, and NSEraDatePickerElementFlag
-	datePicker's setDatePickerElements:((current application's NSYearMonthDayDatePickerElementFlag) + (current application's NSHourMinuteSecondDatePickerElementFlag as integer))
+property NSAlertSecondButtonReturn : 1001
+property NSHourMinuteSecondDatePickerElementFlag : 14
+property NSTextFieldAndStepperDatePickerStyle : 0
+property NSYearMonthDayDatePickerElementFlag : 224
+--------------------------------------------------------------------------------
+property date : missing value
+--------------------------------------------------------------------------------
+on run
+    its performSelectorOnMainThread:("showDatePicker:") withObject:{¬
+        NSTextFieldAndStepperDatePickerStyle, ¬
+        NSYearMonthDayDatePickerElementFlag + ¬
+        NSHourMinuteSecondDatePickerElementFlag} ¬
+        waitUntilDone:true
 
-	-- set initial date
-	#datePicker's setDateValue:(current application's NSDate's |date|())
-	--set theCal var to a new(empty) instance of the calendar
-	set theCal to current application's class "NSCalendar"'s currentCalendar()
-	-- unpack the components of theCal to a variable
-	set theComponents to theCal's components:254 fromDate:(current application's NSDate's |date|())
-	theComponents's setSecond:0
-	theComponents's setMinute:0
-	theComponents's setHour:12
-	theComponents's setYear:2015
-	theComponents's setMonth:4
-	theComponents's setDay:1
-	datePicker's setDateValue:(theCal's dateFromComponents:theComponents)
+    return my date
+end run
 
-	-- get the size it needs
-	set theSize to datePicker's fittingSize()
-	--resize the picker and view accordingly
-	theView's setFrameSize:theSize
-	datePicker's setFrameSize:theSize
-	-- add the picker to the view
-	theView's setSubviews:{datePicker}
-	-- create an alert
-	set theAlert to current application's NSAlert's alloc()'s init()
-	-- set up alert
-	tell theAlert
-		its setMessageText:"Pick a date and time"
-		its setInformativeText:"Any date"
-		its addButtonWithTitle:"OK"
-		its addButtonWithTitle:"Cancel"
-		its setAccessoryView:theView
-	end tell
+on showDatePicker:params
+    local params
 
-	-- show alert in modal loop
-	set returnCode to theAlert's runModal()
-	if returnCode = (current application's NSAlertSecondButtonReturn) then error number -128
-	-- retrieve date
-	#set theDate to datePicker's dateValue() as date
-	# Shane Stanley
-	# http://macscripter.net/viewtopic.php?pid=119633#p119633
-	set theDate to datePicker's dateValue()
-	#set theCal to current application's class "NSCalendar"'s currentCalendar()
-	-- unpack the components of theDate to a variable
-	set theComponents to theCal's components:254 fromDate:theDate
-	set theDate to current date
-	set day of theDate to 1 -- important
-	set seconds of theDate to theComponents's |second|()
-	set year of theDate to theComponents's |year|()
-	set month of theDate to theComponents's |month|()
-	set day of theDate to theComponents's |day|()
-	set hours of theDate to theComponents's hour()
-	set minutes of theDate to theComponents's minute()
+    set {PickerStyle, PickerElements} to params
 
-	return (theDate as text)
-	#return (theDate)
-end datePicker
+    tell (current date) to set ¬
+        [dateFrom, day, its month, day, year, time] to ¬
+        [it, 1, 4, 1, 2015, 12 * hours + 0 * minutes]
+
+    tell NSDatePicker's alloc()
+        initWithFrame_({{0, 0}, {100, 100}})
+        setDatePickerStyle_(PickerStyle)
+        setDatePickerElements_(PickerElements)
+        setDateValue_(dateFrom)
+        set fittingSize to fittingSize()
+        setFrameSize_(fittingSize)
+
+        set View to NSView's alloc()
+        View's initWithFrame:{{0, 0}, {100, 175}}
+        View's setFrameSize:fittingSize
+        View's addSubview:it
+
+        tell NSAlert's alloc()
+            init()
+            setMessageText_("Pick a date and time")
+            setInformativeText_("Any date")
+            addButtonWithTitle_("OK")
+            addButtonWithTitle_("Cancel")
+            setAccessoryView_(View)
+
+            runModal()
+        end tell
+
+        set my date to dateValue() as date
+    end tell
+end showDatePicker:
+---------------------------------------------------------------------------❮END❯

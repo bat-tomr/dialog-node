@@ -366,7 +366,8 @@ var dialogNode = module.exports = {
     else if( OS === "darwin")
     {
       str = str.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('datepicker.osa');
+      // cmd.push('osascript') && cmd.push('datepicker.osa');
+      cmd.push('/usr/bin/automator', 'datepicker.workflow');
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
@@ -487,9 +488,12 @@ var dialogNode = module.exports = {
           stderr.indexOf('User canceled') === -1 &&
           (
             code || (
-              // Avoid treating as error for fileselect response warning
               stderr &&
-              stderr.indexOf('Class FIFinderSyncExtensionHost is implemented') === -1
+              // Avoid treating as error for:
+              // ...fileselect response warning
+              stderr.indexOf('Class FIFinderSyncExtensionHost is implemented') === -1 &&
+              // ...datepicker response warning
+              stderr.indexOf('Cache location entry for') === -1
             )
           )
         ) {

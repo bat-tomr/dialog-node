@@ -12,9 +12,10 @@
     "email": "truge@blueaspentech.com",
     "url": "http://www.blueaspentech.com"
   },
-  "license": {
-    "license": "MIT"
-  },
+  "contributors": [
+    "Brett Zamir"
+  ],
+  "license": "MIT",
   "main": "index.js",
   "keywords": [
     "dialogs",

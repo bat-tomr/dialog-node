@@ -4,7 +4,7 @@ dialog-node is providing developers an easy cross platform way to use interactiv
 
 * no external dependencies since dialog-node does all the UI dialogs with onboard tools
 * low memory foot print, important for IoT platforms like Raspberry
-* low CPU consumption 
+* low CPU consumption
 
 ## Installation
 
@@ -31,7 +31,7 @@ This test will run through all available dialogs with some example settings
 
 ### Example (see also example.js)
 
-```
+```js
 var dialog = require('dialog-node');
 
 //will be called after user closes the dialog
@@ -64,12 +64,13 @@ directory = location of mode_modules folder that includes dialog-node
 
 ### Parameter for all dialogs
 ```
-dialog-node.<dialog>(msg, title, timeout, callback);
+promise = dialog-node.<dialog>(msg, title, timeout, callback);
 
 msg      = string containing specific dialog message
 title    = string containing title of dialog (this parameter is not observed for all dialogs)
 timeout  = dialog is timing out after <timeout> seconds, if parameter is 0 dialog does not time out
 callback = to be called after user closes dialog, for further description see further below
+promise  = resolves to the return value or an Error object with "stderr" as the message and any exit code as its `code` property
 ```
 
 ### info
@@ -96,7 +97,7 @@ dialog-node.error(msg, title, timeout, callback);
 
 ### question
 
-A dialog that displays text and title and that prompts user to click a Cancel or an OK button. OK is the default answer. 
+A dialog that displays text and title and that prompts user to click a Cancel or an OK button. OK is the default answer.
 
 ```
 dialog-node.question(msg, title, timeout, callback);
@@ -134,7 +135,7 @@ Returns the date the user selected as a string handed into the callback function
 
 ### file select
 
-Prompts user to select a file. 
+Prompts user to select a file.
 
 ```
 dialog-node.fileselect(msg, title, timeout, callback);
@@ -152,7 +153,7 @@ dialog-nodes are non-blocking and call a callback function after the user action
 ```
 function(code, retVal, stderr)
 
-code = return code from dialog 
+code = return code from dialog
 retVal = user's response as a string
 stderr = any error information that the dialog created
 ```
@@ -161,7 +162,7 @@ stderr = any error information that the dialog created
 
 ## Known Bugs / Issues
 
-* timeout not a functional parameter for some dialogs (i.e. file select) 
+* timeout not a functional parameter for some dialogs (i.e. file select)
 
 ## Authors
 
@@ -175,5 +176,3 @@ This project is licensed under the MIT License -
 
 * Tomás Pollak for the inspiration and elegant but short dialog code, see also https://github.com/tomas/dialog
 * OSX date picker from Shane Stanley, modified by Christopher Stone, see also https://forum.keyboardmaestro.com/t/feature-request-date-picker-in-prompt-for-user-action/3281
-
-

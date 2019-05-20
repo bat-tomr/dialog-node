@@ -1,3 +1,5 @@
+'use strict';
+
 var join = require('path').join,
     spawn = require('child_process').spawn,
     os = require('os');
@@ -37,6 +39,9 @@ var dialogNode = module.exports = {
   },
 
   info: function(str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
+
     this.init();
     if( OS === "linux")
     {
@@ -51,6 +56,7 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
 
     }
@@ -67,6 +73,7 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
 
     }
@@ -82,13 +89,17 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   warn: function(str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
+
     this.init();
     if( OS === "linux")
     {
@@ -103,6 +114,7 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
 
     }
@@ -119,6 +131,7 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if (OS === "win32")
@@ -134,13 +147,17 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   error: function(str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
+
     this.init();
     if( OS === "linux")
     {
@@ -156,6 +173,7 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if( OS === "darwin")
@@ -170,6 +188,7 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if (OS === "win32")
@@ -184,13 +203,17 @@ var dialogNode = module.exports = {
       cb = function(code, stdout, stderr){
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   question: function( str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
+
     this.init();
     if( OS === "linux")
     {
@@ -208,6 +231,7 @@ var dialogNode = module.exports = {
           retVal = OK_STR;
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if( OS === "darwin")
@@ -225,6 +249,7 @@ var dialogNode = module.exports = {
           retVal = OK_STR;
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if (OS === "win32")
@@ -243,13 +268,16 @@ var dialogNode = module.exports = {
           retVal = CANCEL_STR;
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   entry: function( str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
     this.init();
     if( OS === "linux")
     {
@@ -265,6 +293,7 @@ var dialogNode = module.exports = {
         retVal = stdout.slice(0,-1);
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if( OS === "darwin")
@@ -289,6 +318,7 @@ var dialogNode = module.exports = {
 
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if (OS === "win32")
@@ -304,13 +334,17 @@ var dialogNode = module.exports = {
         retVal = stdout;
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   calendar: function( str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
+
     this.init();
     if( OS === "linux")
     {
@@ -326,6 +360,7 @@ var dialogNode = module.exports = {
         retVal = stdout.slice(0,-1);
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if( OS === "darwin")
@@ -337,18 +372,21 @@ var dialogNode = module.exports = {
         retVal = stdout.slice(0,-1);
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if (OS === "win32")
     {
-      this.entry( str, title, timeout, callback);
-      return
+      return this.entry( str, title, timeout, callback);
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   fileselect: function( str, title, timeout, callback){
+    var cb;
+    timeout = timeout || 0;
+
     this.init();
     if( OS === "linux")
     {
@@ -364,6 +402,7 @@ var dialogNode = module.exports = {
         retVal = stdout.slice(0,-1);
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if( OS === "darwin")
@@ -381,6 +420,7 @@ var dialogNode = module.exports = {
 
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
     else if (OS === "win32")
@@ -396,10 +436,11 @@ var dialogNode = module.exports = {
         retVal = stdout;
         if(callback)
           callback(code, retVal, stderr);
+        return retVal;
       }
     }
 
-    this.run(cmd, cb, callback);
+    return this.run(cmd, cb, callback);
   },
 
   debugprint: function(cmd,args,cb){
@@ -415,32 +456,51 @@ var dialogNode = module.exports = {
         args = cmd.splice(1),
         stdout = '', stderr = '';
 
-    try {
-      var child = spawn(bin, args, {cwd:cwd});
-    } catch (err) {
-        console.log('spawn failed : ' + err.message);
-    }
+    return new Promise(function (resolve, reject) {
+      try {
+        var child = spawn(bin, args, {cwd:cwd});
+      } catch (err) {
+          console.log('spawn failed : ' + err.message);
+      }
 
-    var stdoutlines = 0;
+      var stdoutlines = 0;
 
-    //this.debugprint(cmd,args,callback);
+      //this.debugprint(cmd,args,callback);
 
-    child.stdout.on('data', function(data){
-      stdout += data.toString();
-      stdoutlines++;
-    })
+      child.stdout.on('data', function(data){
+        stdout += data.toString();
+        stdoutlines++;
+      })
 
-    child.stderr.on('data', function(data){
-      stderr += data.toString();
-    })
+      child.stderr.on('data', function(data){
+        stderr += data.toString();
+      })
 
-    child.on('error', function(error){
-      console.log("dialog-node, error = ", error);
+      child.on('error', function(error){
+        console.log("dialog-node, error = ", error);
+      });
+
+      child.on('exit', function(code){
+        var retVal = cb && cb(code, stdout, stderr, callback);
+        if (
+          // Avoid treating as error (even with exit code 1, for cancel)
+          stderr.indexOf('User canceled') === -1 &&
+          (
+            code || (
+              // Avoid treating as error for fileselect response warning
+              stderr &&
+              stderr.indexOf('Class FIFinderSyncExtensionHost is implemented') === -1
+            )
+          )
+        ) {
+          var err = new Error(stderr || '');
+          err.code = code;
+          reject(err);
+          return;
+        }
+        resolve(retVal);
+      })
     });
-
-    child.on('exit', function(code){
-      cb && cb(code, stdout, stderr, callback);
-    })
   }
 
 }

@@ -12,7 +12,7 @@ my datePicker()
 
 on datePicker()
 	set theApp to path to frontmost application as text
-	
+
 	if not (current application's NSThread's isMainThread()) as boolean then
 		display alert "This script must be run from the main thread." buttons {"Cancel"} as critical
 		error number -128
@@ -27,7 +27,7 @@ on datePicker()
 	#datePicker's setDatePickerStyle:(current application's NSTextFieldDatePickerStyle)
 	-- set elements: choices include NSHourMinuteDatePickerElementFlag, NSHourMinuteSecondDatePickerElementFlag, NSTimeZoneDatePickerElementFlag, NSYearMonthDatePickerElementFlag, and NSEraDatePickerElementFlag
 	datePicker's setDatePickerElements:((current application's NSYearMonthDayDatePickerElementFlag) + (current application's NSHourMinuteSecondDatePickerElementFlag as integer))
-	
+
 	-- set initial date
 	#datePicker's setDateValue:(current application's NSDate's |date|())
 	--set theCal var to a new(empty) instance of the calendar
@@ -41,7 +41,7 @@ on datePicker()
 	theComponents's setMonth:4
 	theComponents's setDay:1
 	datePicker's setDateValue:(theCal's dateFromComponents:theComponents)
-	
+
 	-- get the size it needs
 	set theSize to datePicker's fittingSize()
 	--resize the picker and view accordingly
@@ -59,7 +59,7 @@ on datePicker()
 		its addButtonWithTitle:"Cancel"
 		its setAccessoryView:theView
 	end tell
-	
+
 	-- show alert in modal loop
 	set returnCode to theAlert's runModal()
 	if returnCode = (current application's NSAlertSecondButtonReturn) then error number -128
@@ -79,7 +79,7 @@ on datePicker()
 	set day of theDate to theComponents's |day|()
 	set hours of theDate to theComponents's hour()
 	set minutes of theDate to theComponents's minute()
-	
+
 	return (theDate as text)
 	#return (theDate)
 end datePicker

@@ -18,6 +18,5 @@ module.exports = {
       ecmaVersion: 2017
     },
     rules: {
-      'no-useless-escape': 'off'
     }
   };

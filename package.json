@@ -23,7 +23,7 @@
     "x-platform"
   ],
   "scripts": {
-    "lint": "eslint .",
+    "eslint": "eslint .",
     "start": "node example.js",
     "test": "node ./test-dialog-node.js"
   },

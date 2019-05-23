@@ -44,12 +44,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     if( OS === 'linux')
     {
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--info');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--info',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
 
       cb = function(code, stdout, stderr){
         if(callback)
@@ -62,10 +64,10 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     {
       title = 'information: ' + title;
       message = message.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('-e');
+      cmd.push('osascript', '-e');
       let script = 'tell app "System Events" to display dialog ';
-      script += '"' + message + '" with title "' + title + '" buttons "OK"';
-      script += ' giving up after ' + timeout;
+      script += `"${message}" with title "${title}" buttons "OK"`;
+      script += ` giving up after ${timeout}`;
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
@@ -77,12 +79,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     }
     else if (OS === 'win32')
     {
-      cmd.push('cscript');
-      cmd.push('//Nologo');
-      cmd.push('msgbox.vbs');
-      cmd.push('notification');
-      cmd.push('information: ' + title);
-      cmd.push(message);
+      cmd.push(
+        'cscript',
+        '//Nologo',
+        'msgbox.vbs',
+        'notification',
+        'information: ' + title,
+        message
+      );
 
       cb = function(code, stdout, stderr){
         if(callback)
@@ -105,12 +109,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     if( OS === 'linux')
     {
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--warning');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--warning',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
 
       cb = function(code, stdout, stderr){
         if(callback)
@@ -123,10 +129,10 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     {
       title = 'warning: ' + title;
       message = message.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('-e');
-      let script = 'tell app \"System Events\" to display dialog ';
-      script += '\"' + message + '\" with title \"' + title + '\" buttons \"OK\"';
-      script += ' giving up after ' + timeout;
+      cmd.push('osascript', '-e');
+      let script = 'tell app "System Events" to display dialog ';
+      script += `"${message}" with title "${title}" buttons "OK"`;
+      script += ` giving up after ${timeout}`;
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
@@ -138,12 +144,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     else if (OS === 'win32')
     {
 
-      cmd.push('cscript');
-      cmd.push('//Nologo');
-      cmd.push('msgbox.vbs');
-      cmd.push('notification');
-      cmd.push('warning' + title);
-      cmd.push(message);
+      cmd.push(
+        'cscript',
+        '//Nologo',
+        'msgbox.vbs',
+        'notification',
+        'warning' + title,
+        message
+      );
 
       cb = function(code, stdout, stderr){
         if(callback)
@@ -167,12 +175,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     {
       title = 'error: ' + title;
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--error');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--error',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
 
       cb = function(code, stdout, stderr){
         if(callback)
@@ -183,10 +193,10 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     else if( OS === 'darwin')
     {
       message = message.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('-e');
-      let script = 'tell app \"System Events\" to display dialog ';
-      script += '\"' + message + '\" with title \"' + title + '\" buttons \"OK\"';
-      script += ' giving up after ' + timeout;
+      cmd.push('osascript', '-e');
+      let script = 'tell app "System Events" to display dialog ';
+      script += `"${message}" with title "${title}" buttons "OK"`;
+      script += ` giving up after ${timeout}`;
       cmd.push(script);
 
       cb = function(code, stdout, stderr){
@@ -197,12 +207,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     }
     else if (OS === 'win32')
     {
-      cmd.push('cscript');
-      cmd.push('//Nologo');
-      cmd.push('msgbox.vbs');
-      cmd.push('notification');
-      cmd.push('error: ' + title);
-      cmd.push(message);
+      cmd.push(
+        'cscript',
+        '//Nologo',
+        'msgbox.vbs',
+        'notification',
+        'error: ' + title,
+        message
+      );
 
       cb = function(code, stdout, stderr){
         if(callback)
@@ -225,12 +237,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     if( OS === 'linux')
     {
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--question');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--question',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
       cb = function(code, stdout, stderr){
         if(code)
           retVal = CANCEL_STR;
@@ -244,10 +258,10 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     else if( OS === 'darwin')
     {
       message = message.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('-e');
-      let script = 'tell app \"System Events\" to display dialog ';
-      script += '\"' + message + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
-      script += ' giving up after ' + timeout;
+      cmd.push('osascript', '-e');
+      let script = 'tell app "System Events" to display dialog ';
+      script += `"${message}" with title "${title}" buttons {"Cancel", "OK"}`;
+      script += ` giving up after ${timeout}`;
       cmd.push(script);
       cb = function(code, stdout, stderr){
         if(code)
@@ -261,12 +275,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     }
     else if (OS === 'win32')
     {
-      cmd.push('cscript');
-      cmd.push('//Nologo');
-      cmd.push('msgbox.vbs')
-      cmd.push('question');
-      cmd.push(title);
-      cmd.push(message);
+      cmd.push(
+        'cscript',
+        '//Nologo',
+        'msgbox.vbs',
+        'question',
+        title,
+        message
+      );
 
       cb = function(code, stdout, stderr){
         if(stdout === '1')
@@ -292,12 +308,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     if( OS === 'linux')
     {
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--entry');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--entry',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
@@ -309,14 +327,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     else if( OS === 'darwin')
     {
       message = message.replace(/"/g, "'"); // double quotes to single quotes
-      cmd.push('osascript') && cmd.push('-e');
+      cmd.push('osascript', '-e');
 
-      let script = 'set theResponse to display dialog "' + message + '"';
+      let script = `set theResponse to display dialog "${message}"`;
       script += ' default answer "" ';
-      script += ' with icon note with title \"' + title + '\"';
+      script += ` with icon note with title "${title}"`;
       script += ' buttons {"Cancel", "Continue"}';
       script += ' default button "Continue"'
-      script += ' giving up after ' + timeout;
+      script += ` giving up after ${timeout}`;
 
       // const script = 'tell app \"System Events\" to display dialog ';
       // script += '\"' + message + '\" with title \"' + title + '\" buttons {\"Cancel\", \"OK\"}';
@@ -333,12 +351,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     }
     else if (OS === 'win32')
     {
-      cmd.push('cscript');
-      cmd.push('//Nologo');
-      cmd.push('msgbox.vbs')
-      cmd.push('entry');
-      cmd.push(title);
-      cmd.push(message);
+      cmd.push(
+        'cscript',
+        '//Nologo',
+        'msgbox.vbs',
+        'entry',
+        title,
+        message
+      );
 
       cb = function(code, stdout, stderr){
         retVal = stdout;
@@ -362,12 +382,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     if( OS === 'linux')
     {
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--calendar');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--calendar',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
@@ -379,7 +401,7 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     else if( OS === 'darwin')
     {
       message = message.replace(/"/g, "'"); // double quotes to single quotes
-      // cmd.push('osascript') && cmd.push('datepicker.osa');
+      // cmd.push('osascript', 'datepicker.osa');
       cmd.push('/usr/bin/automator', 'datepicker.workflow');
       cb = function(code, stdout, stderr){
         //remove line ending
@@ -408,12 +430,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     if( OS === 'linux')
     {
       message = message.replace(/[<>]/g, '');
-      cmd.push('zenity');
-      cmd.push('--file-selection');
-      cmd.push('--text') && cmd.push(message);
-      cmd.push('--title') && cmd.push(title);
-      cmd.push('--timeout') && cmd.push(timeout);
-      if (message.length > 30) cmd.push('--width') && cmd.push('300');
+      cmd.push(
+        'zenity',
+        '--file-selection',
+        '--text', message,
+        '--title', title,
+        '--timeout', timeout
+      );
+      if (message.length > 30) cmd.push('--width', '300');
       cb = function(code, stdout, stderr){
         //remove line ending
         retVal = stdout.slice(0,-1);
@@ -433,7 +457,7 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
           "const document = app.chooseFile({withPrompt: \"" + message + "\" }); " +
           "console.log(\"text returned: \"+document);";
 
-        cmd.push('osascript', '-l', 'JavaScript', '-e', script);
+      cmd.push('osascript', '-l', 'JavaScript', '-e', script);
 
       cb = function(code, stdout, stderr){
         //parse return from appl script code
@@ -448,12 +472,14 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     }
     else if (OS === 'win32')
     {
-      cmd.push('cscript');
-      cmd.push('//Nologo');
-      cmd.push('msgbox.vbs')
-      cmd.push('fileselect');
-      cmd.push(title);
-      cmd.push(message);
+      cmd.push(
+        'cscript',
+        '//Nologo',
+        'msgbox.vbs',
+        'fileselect',
+        title,
+        message
+      );
 
       cb = function(code, stdout, stderr){
         retVal = stdout;

@@ -32,15 +32,27 @@ This test will run through all available dialogs with some example settings
 ### Example (see also example.js)
 
 ```js
-var dialog = require('dialog-node');
+const dialog = require('dialog-node');
 
 //will be called after user closes the dialog
-var callback = function(code, retVal, stderr)
+const callback = function(code, retVal, stderr)
 {
-	console.log("return value = <" + retVal + ">");
+	console.log('return value = <' + retVal + '>');
 }
 
-dialog.entry('Type some text', "entry prompt", 0, callback);
+dialog.entry('Type some text', 'entry prompt', 0, callback);
+
+// OR:
+
+try {
+	const {response, stderr} = await dialog.entry({
+		message: 'Type some text',
+		title: 'entry prompt',
+		timeout: 0
+	});
+} catch ({code, stderr}) {
+	// ... Handle any errors
+}
 ```
 
 in order to run example.js:
@@ -48,6 +60,7 @@ in order to run example.js:
 ```
 npm start
 ```
+
 ## Usage
 
 ### setCwd(directory) (optional)
@@ -64,9 +77,9 @@ directory = location of mode_modules folder that includes dialog-node
 
 ### Parameter for all dialogs
 ```
-promise = dialog-node.<dialog>(msg, title, timeout, callback);
+promise = dialog-node.<dialog>(message, title, timeout, callback);
 
-msg      = string containing specific dialog message
+message      = string containing specific dialog message
 title    = string containing title of dialog (this parameter is not observed for all dialogs)
 timeout  = dialog is timing out after <timeout> seconds, if parameter is 0 dialog does not time out
 callback = to be called after user closes dialog, for further description see further below
@@ -77,7 +90,7 @@ promise  = resolves to the return value or an Error object with "stderr" as the 
 
 Information dialog with text and title and an OK button
 ```
-dialog-node.info(msg, title, timeout, callback);
+dialog-node.info(message, title, timeout, callback);
 ```
 
 ### warn
@@ -85,14 +98,14 @@ dialog-node.info(msg, title, timeout, callback);
 Warning dialog with text and title and an OK button
 
 ```
-dialog-node.warn(msg, title, timeout, callback);
+dialog-node.warn(message, title, timeout, callback);
 ```
 
 ### error
 
 Error dialog with text and title and an OK button
 ```
-dialog-node.error(msg, title, timeout, callback);
+dialog-node.error(message, title, timeout, callback);
 ```
 
 ### question
@@ -100,7 +113,7 @@ dialog-node.error(msg, title, timeout, callback);
 A dialog that displays text and title and that prompts user to click a Cancel or an OK button. OK is the default answer.
 
 ```
-dialog-node.question(msg, title, timeout, callback);
+dialog-node.question(message, title, timeout, callback);
 ```
 
 Returns the result of the user action as a string handed into the callback function (see also callback mechanism):
@@ -113,7 +126,7 @@ Returns the result of the user action as a string handed into the callback funct
 Dialog querying user to type in some text.
 
 ```
-dialog-node.entry(msg, title, timeout, callback);
+dialog-node.entry(message, title, timeout, callback);
 ```
 
 Returns the text the user typed as a string handed into the callback function (see also callback mechanism):
@@ -125,7 +138,7 @@ Returns the text the user typed as a string handed into the callback function (s
 Prompts user to select or type a date. This one varies quite a bit across the different OSes.
 
 ```
-dialog-node.calendar(msg, title, timeout, callback);
+dialog-node.calendar(message, title, timeout, callback);
 ```
 
 Returns the date the user selected as a string handed into the callback function (see also callback mechanism):
@@ -138,7 +151,7 @@ Returns the date the user selected as a string handed into the callback function
 Prompts user to select a file.
 
 ```
-dialog-node.fileselect(msg, title, timeout, callback);
+dialog-node.fileselect(message, title, timeout, callback);
 ```
 
 Returns the path of a selected file as a string handed into the callback function (see also callback mechanism):

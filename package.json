@@ -23,14 +23,17 @@
     "x-platform"
   ],
   "scripts": {
+    "lint": "eslint .",
     "start": "node example.js",
     "test": "node ./test-dialog-node.js"
   },
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  },
   "optionalDependencies": {},
   "engines": {
-    "node": "*"
+    "node": ">= 8.0.0"
   },
   "maintainers": [
     {

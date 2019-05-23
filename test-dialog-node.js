@@ -1,22 +1,23 @@
- var dialogNode = require('../dialog-node');
- var os = require('os');
- var events = require('events');
+'use strict';
+const dialogNode = require('../dialog-node');
+const os = require('os');
+const events = require('events');
 
- callback = function(exitCode, retVal, stderr){
-   console.log("exitCode = ", exitCode);
-   console.log("return value = <" + retVal + ">");
-   console.log("stderr = ", stderr);
-   console.log(os.EOL);
-   eventEmitter.emit('nextCall');
- };
+const callback = function(exitCode, retVal, stderr){
+	console.log("exitCode = ", exitCode);
+	console.log("return value = <" + retVal + ">");
+	console.log("stderr = ", stderr);
+	console.log(os.EOL);
+	eventEmitter.emit('nextCall');
+};
 
 // loop through all dialogs and exit. Since dialog-node is non-modal or non blocking
 // We are handling the execution in our own little pseudo event queue
 
-var eventEmitter = new events.EventEmitter();
-var ptr = 0;
+const eventEmitter = new events.EventEmitter();
+let ptr = 0;
 
-var eventQueue = [
+const eventQueue = [
 	{ cmd:dialogNode.info,
 		args:["This dialog closes in 3 seconds", "timeout", 3, callback] },
 	{ cmd:dialogNode.warn,
@@ -37,8 +38,8 @@ var eventQueue = [
 		args:[] }
 ];
 
-var evalNextFunction = function(){
-	var evalFun = eventQueue[ptr].cmd.apply(dialogNode, eventQueue[ptr].args);
+const evalNextFunction = function(){
+	/* const evalFun = */ eventQueue[ptr].cmd.apply(dialogNode, eventQueue[ptr].args);
 	ptr++;
 }
 

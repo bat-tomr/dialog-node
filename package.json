@@ -12,9 +12,7 @@
     "email": "truge@blueaspentech.com",
     "url": "http://www.blueaspentech.com"
   },
-  "license": {
-    "license": "MIT"
-  },
+  "license": "MIT",
   "main": "index.js",
   "keywords": [
     "dialogs",

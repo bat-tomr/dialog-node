@@ -27,7 +27,10 @@
     "start": "node example.js",
     "test": "node ./test-dialog-node.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "node-static": "^0.7.11",
+    "open": "^6.4.0"
+  },
   "devDependencies": {
     "eslint": "^5.16.0"
   },

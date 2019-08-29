@@ -1,5 +1,9 @@
 'use strict';
 
+const statik = require('node-static');
+const http = require('http');
+const open = require('open');
+const querystring = require('querystring');
 const {spawn} = require('child_process'),
     os = require('os');
 
@@ -555,6 +559,102 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
         }
         resolve({response, stderr});
       })
+    });
+  },
+
+  html ({
+    serverPath = process.cwd(),
+    port = 8091,
+    url = `http://localhost:${port}/`,
+    info = null,
+    openOptions = undefined,
+    serverOptions = undefined,
+    message = null,
+    favicon = false,
+    title = null,
+    submittedMessage = `
+    <!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      <head>
+        <meta charset="utf-8" />
+        <title>${title}</title>
+      </head>
+      <body>
+        <b>The form has been successfully submitted. You may now close this window.</b>
+      </body>
+    </html>
+    `
+  } = {}){
+    if (!url.match(/https?:/)) {
+      url = `http://localhost:${port}/${url}`
+    }
+    return new Promise((resolve, reject) => {
+      const fileServer = new statik.Server(serverPath, serverOptions);
+      const server = http.createServer((req, res) => {
+
+        // console.log('Method, content-type and URL', req.method, req.headers['content-type'], req.url);
+        if (!favicon && req.url === '/favicon.ico') {
+          return;
+        }
+        if (req.method === 'POST' && req.url === '/') {
+          let body = '';
+          req.on('data', chunk => {
+            body += chunk.toString();
+          });
+          req.on('end', () => {
+            if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+              res.end(submittedMessage);
+              server.close();
+              resolve(querystring.parse(body));
+            } else if (req.headers['content-type'] === 'application/json') {
+              server.close();
+              resolve(JSON.parse(body));
+            }
+          });
+          return;
+        }
+        req.addListener('end', () => {
+          if (typeof message === 'string') {
+            res.setHeader('Content-Type', 'text/html');
+            if (typeof title === 'string') {
+              res.write(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf8" />
+  <title>${title}</title>
+</head>
+`);
+            }
+            /*
+            // Can't close in Firefox, etc. if not opened by script
+            if (typeof timeout === 'number') {
+              res.write(`
+                <script>
+                setTimeout(function () {
+                  window.close();
+                }, ${timeout});
+                </script>
+              `);
+            }
+            */
+            res.end(message);
+            return;
+          }
+          fileServer.serve(req, res, (err) => {
+            res.end();
+            if (err) {
+              // console.log('err', req.url, err);
+              reject(err);
+            }
+          });
+        }).resume();
+      });
+      server.listen(port);
+      if (info) {
+        const sep = url.includes('?') ? '&' : '?';
+        url += sep + querystring.stringify(info);
+      }
+      open(url, openOptions);
     });
   }
 }

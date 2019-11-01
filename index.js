@@ -330,7 +330,8 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
     }
     else if( OS === 'darwin')
     {
-      message = message.replace(/"/g, "'"); // double quotes to single quotes
+      // Message not currently in use
+      // message = message.replace(/"/g, "'"); // double quotes to single quotes
       cmd.push('osascript', '-e');
 
       let script = `set theResponse to display dialog "${message}"`;

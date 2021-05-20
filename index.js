@@ -378,6 +378,7 @@ var dialogNode = module.exports = {
         //parse return from appl script code
         var findstr = "text returned:";
         retVal = stdout.slice(stdout.indexOf("text returned:") + findstr.length, -1);
+        retVal = retVal.substr(5).replace(/:/g, "/");
 
         if(callback)
           callback(code, retVal, stderr);

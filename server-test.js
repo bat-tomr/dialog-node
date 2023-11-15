@@ -1,7 +1,4 @@
-'use strict';
-const dialog = require('../dialog-node');
-
-(async () => {
+import dialog from './index.js';
 
 const response = await dialog.html({
   url: 'fetch.html',
@@ -11,5 +8,3 @@ const response = await dialog.html({
 
 // eslint-disable-next-line no-console
 console.log('response', response);
-
-})();

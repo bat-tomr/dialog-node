@@ -3,6 +3,7 @@
   "description": "dialog-node is providing developers an easy cross platform way to use interactive dialogs for desktop applications written in nodejs.",
   "version": "0.2.0",
   "bin": "example.js",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/bat-tomr/dialog-node"
@@ -24,19 +25,20 @@
   ],
   "scripts": {
     "eslint": "eslint .",
+    "lint": "npm run eslint",
     "start": "node example.js",
+    "server-test": "node server-test.js",
     "test": "node ./test-dialog-node.js"
   },
   "dependencies": {
     "node-static": "^0.7.11",
-    "open": "^6.4.0"
+    "open": "^9.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "eslint": "^8.53.0"
   },
-  "optionalDependencies": {},
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">=18.0.0"
   },
   "maintainers": [
     {

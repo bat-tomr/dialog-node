@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
     extends: [
       'eslint:recommended'
@@ -15,7 +17,8 @@ module.exports = {
       }
     ],
     parserOptions: {
-      ecmaVersion: 2017
+      sourceType: 'module',
+      ecmaVersion: 2022
     },
     rules: {
     }

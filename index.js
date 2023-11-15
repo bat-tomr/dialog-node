@@ -1,11 +1,14 @@
-'use strict';
+import http from 'http';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import {spawn} from 'child_process';
+import os from 'os';
 
-const statik = require('node-static');
-const http = require('http');
-const open = require('open');
-const querystring = require('querystring');
-const {spawn} = require('child_process'),
-    os = require('os');
+import statik from 'node-static';
+import open from 'open';
+import querystring from 'querystring';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const OS = os.platform();
 
@@ -22,7 +25,7 @@ if(OS != 'linux' && OS != 'darwin' && OS != 'win32')
   process.exit(9);
 }
 
-/* const dialogNode = */ module.exports = {
+/* const dialogNode = */ export default {
 
   // some packaging tools don't set __dirname properly (webpack or jxcore)
   // this function allows the calling module to set dialog-node's working directory properly

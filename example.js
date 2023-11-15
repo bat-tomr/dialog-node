@@ -1,5 +1,4 @@
-'use strict';
-const dialog = require('../dialog-node');
+import dialog from './index.js';
 
 //will be called after user closes the dialog
 const callback = function(code, retVal /* , stderr */)

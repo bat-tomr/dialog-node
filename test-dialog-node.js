@@ -1,7 +1,6 @@
-'use strict';
-const dialogNode = require('../dialog-node');
-const os = require('os');
-const events = require('events');
+import os from 'os';
+import events from 'events';
+import dialogNode from './index.js';
 
 const callback = function(exitCode, retVal, stderr){
 	console.log("exitCode = ", exitCode);

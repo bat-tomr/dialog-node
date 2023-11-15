@@ -32,7 +32,7 @@ This test will run through all available dialogs with some example settings
 ### Example (see also example.js)
 
 ```js
-const dialog = require('dialog-node');
+import dialog from 'dialog-node';
 
 //will be called after user closes the dialog
 const callback = function(code, retVal, stderr)
